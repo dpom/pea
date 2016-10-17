@@ -20,7 +20,10 @@
   (require 'yetibot.core.commands.history :reload)
   (require 'yetibot.core.commands.users :reload)
   (require 'yetibot.core.commands.collections :reload)
-  (require 'yetibot.core.observers.users :reload))
+  (require 'pea.plugins.commands.clojure :reload)
+  (require 'pea.plugins.commands.howto :reload)
+  (require 'yetibot.core.observers.users :reload)
+)
 
 (defn load-minimal-with-db []
   (db/repl-start)

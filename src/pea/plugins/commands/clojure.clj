@@ -1,4 +1,4 @@
-(ns pea.commands.clojure
+(ns pea.plugins.commands.clojure
   (:require
     [clojure.string :as s]
     [yetibot.core.hooks :refer [cmd-hook]]
