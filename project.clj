@@ -1,4 +1,4 @@
-(defproject pea "0.1"
+(defproject pea "0.2-dev-01"
   :description "A Personal Education Assistant inside your chat."
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -38,7 +38,7 @@
             [io.sarnowski/lein-docker "1.1.0"]]
 
   :aliases
-  {"version" ["exec" "-ep" "(use 'yetibot.core.version)(print version)"]}
+  {"version" ["exec" "-ep" "(use 'pea.version)(print version)"]}
   :pedantic :ignore
 
   :docker {:image-name "dpom/pea"}
