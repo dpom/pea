@@ -1,0 +1,11 @@
+{:yetibot
+ {:db {:datomic-url "datomic:mem://yetibot"}
+  :adapters
+  [{:name "freenode-irc",
+    :type :irc,
+    :host "chat.freenode.net",
+    :port "6665",
+    :username "pea_yetibot"
+    :rooms #{"#pea" "#yetibot"}}]
+  }
+}
