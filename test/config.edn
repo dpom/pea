@@ -1,5 +1,6 @@
 {:yetibot
- {:db {:datomic-url "datomic:mem://yetibot"}
+ {:db {:datomic-url "datomic:mem://peatest"}
+  :type :demo
   :adapters
   [{:name "freenode-irc",
     :type :irc,

@@ -8,10 +8,8 @@
                  [yetibot.core "0.3.16"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [com.stuartsierra/component "0.3.1"]
-                 [org.danielsz/system "0.3.1"]
 
                  ;; logging
-                 [devth/timbre "3.3.1"]
                  [org.clojure/tools.logging "0.3.1"]
                  [log4j "1.2.17" :exclusions [javax.mail/mail
                                               javax.jms/jms
@@ -50,7 +48,7 @@
   :profiles {:check {:global-vars {*warn-on-reflection* true}}
              :dev {:source-paths ["dev"]
                    :test-paths ["src"]
-                   :resource-dirs ["log"]
+                   :resource-paths ["log"]
                    :jvm-opts ["-Dlog4j.configuration=file:log/log4j.properties"]
                    :env {:config-file "dev/config.edn"}
                    :dependencies [[org.clojure/tools.namespace "0.2.10"]

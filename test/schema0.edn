@@ -1,0 +1,19 @@
+[
+ ;; howto
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :howto/title
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A howto's title"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :howto/text
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A howto's text"
+  :db.install/_attribute :db.part/db}
+ ]

@@ -7,36 +7,13 @@
    [environ.core :as env]
    [pea.components
     [config :as cfg]
+    [db :refer [new-db]]
     [bot :refer [new-bot]]]
-   [system.components
-    [datomic :refer [new-datomic-db]]
-    [repl-server :refer [new-repl-server]]]
    ))
 
 ;;; global system variable
 (def system  nil)
 
-
-
-
-;; for tests - dbsystem
-(defn new-dbsystem
-  "System constructor.
-  @return a new system map."
-  []
-  (let [config (cfg/new-config "test/config.edn")
-        db_uri (cfg/get-db-uri config)]
-    (component/system-map
-     :db (new-datomic-db db_uri)
-     :config config)))
-
-(defn start-dbsystem
-  []
-  (component/start-system (new-dbsystem)))
-
-(defn stop-dbsystem
-  [system]
-  (component/stop-system system))
 
 
 ;;; System constructor
@@ -47,7 +24,7 @@
   [config]
   (component/system-map
    :config config
-   :db (new-datomic-db (cfg/get-db-uri config))
+   :db (new-db config)
    :bot (component/using
          (new-bot config)
          [:config :db])))
@@ -69,3 +46,26 @@
   []
   (alter-var-root #'system
                   (fn [s] (when s (component/stop-system s)))))
+
+;; for tests - dbsystem
+
+(defn new-dbsystem
+  "System constructor.
+  @return a new system map."
+  []
+  (let [config (cfg/new-config "test/config.edn")]
+    (component/system-map
+     :config config
+     :db (new-db config))))
+
+(defn start-dbsystem!
+  []
+  (alter-var-root #'system (constantly (new-dbsystem)))
+  (start!))
+
+;;; aux functions
+
+(defn get-db-conn
+  "Get database connection."
+  []
+  (get-in system [:db :conn]))

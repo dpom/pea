@@ -29,7 +29,8 @@
 
 (deftest new-config-test
   (is (= {:yetibot
-          {:db {:datomic-url "datomic:mem://yetibot"},
+          {:db {:datomic-url "datomic:mem://pea"},
+           :type :demo
            :adapters
            [{:name "freenode-irc",
              :type :irc,
@@ -48,6 +49,13 @@
   (get-in config [:yetibot :db :datomic-url]))
 
 (deftest get-db-uri-test
-  (is (= "datomic:mem://yetibot"
+  (is (= "datomic:mem://pea"
          (get-db-uri (new-config (env/env :config-file))))))
 
+
+(defn get-app-type
+  "Get the application's type.
+  @param config - configuration map
+  @return application type (:demo or :prod)"
+  [config]
+  (get-in config [:yetibot :type] :prod))
