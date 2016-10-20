@@ -19,40 +19,80 @@
     (println "============== stop command howto tests")
     ))
 
+;; aux function
+(def title_sep "-----")
+(def item_sep "********************************************************")
 
-;; howto command
+(defn format-howto
+  "Prety format the howto,
+  @param - the howto map
+  @return the howto as string"
+  [htmap]
+  (let [{bid :howto/bid title :howto/title text :howto/text} htmap]
+    (format "[%s] %s\n%s\n%s\n%s\n" bid title
+            title_sep
+            text
+            item_sep)))
+
+;; howto commands
 
 (defn howto-cmd
-  "howto <wordkey1> [<wordkey2> [<wordkey3]] # search in howtos records that matches all the keys and display those howtos"
+  "howto <bid> # display the howto with the id bid"
+  {:yb/cat #{:util}}
+  [{:keys [args]}]
+  (let [bid (first (s/split (s/trim args) #"\s"))
+        res (ht/get-howto-by-bid bid)]
+    (if (nil? res)
+      (format "No howtos find for %s\n" bid)
+      (format-howto res))))
+
+(deftest howto-cmd-test
+  (is (=  (str "[admin101] (Linux) Find The Bigest Dirs\n"
+               title_sep  "\n"
+               "On linux shell:\ndu -Sk | sort -nr | head -n10 \n"
+               item_sep "\n")
+          (howto-cmd {:args "admin101"}))
+      "bid ok")
+  (is (=  "No howtos find for cucu\n"
+          (howto-cmd {:args "cucu"}))
+      "bid nok")
+  )
+
+
+(defn qht-cmd
+  "howto? <wordkey1> [<wordkey2> [<wordkey3]] # search in howtos records that matches all the keys and display those howtos"
   {:yb/cat #{:util}}
   [{:keys [args]}]
   (let [wkeys (s/split args #"\s" 3)
         res (apply ht/get-howto wkeys)]
     (if (empty? res)
       (format "No howtos find for %s\n" args)
-      (s/join "\n"
-              (map (fn [r]
-                     (format "%s\n-----\n%s\n" (:howto/title r) (:howto/text r)))
-                   res)))))
+      (s/join "\n" (map format-howto res)))))
 
-
-(deftest howto-cmd-test
-  (is (=  "(Linux) Find The Bigest Dirs\n-----\nOn linux shell:\ndu -Sk | sort -nr | head -n10 \n"
-          (howto-cmd {:args "linux bigest find"}))
+(deftest qht-cmd-test
+  (is (=  (str "[admin101] (Linux) Find The Bigest Dirs\n"
+               title_sep  "\n"
+               "On linux shell:\ndu -Sk | sort -nr | head -n10 \n"
+               item_sep "\n")
+          (qht-cmd {:args "linux bigest find"}))
       "3 words")
-  (is (=  "(Linux) Find The Bigest Dirs\n-----\nOn linux shell:\ndu -Sk | sort -nr | head -n10 \n\n(Linux) Limit the cpu usage of a process.\n-----\nThis will limit the average amount of CPU process with the <pid> consumes (on linux shell):\n sudo cpulimit -p <pid> -l 50\n"
-          (howto-cmd {:args "linux"}))
+  (is (=  (str "[admin101] (Linux) Find The Bigest Dirs\n"
+               title_sep  "\n"
+               "On linux shell:\ndu -Sk | sort -nr | head -n10 \n"
+               item_sep "\n\n" 
+               "[admin102] (Linux) Limit the cpu usage of a process.\n"
+               title_sep "\n"
+               "This will limit the average amount of CPU process with the <pid> consumes (on linux shell):\n sudo cpulimit -p <pid> -l 50\n"
+               item_sep "\n")
+          (qht-cmd {:args "linux"}))
       "1 word")
   (is (=  "No howtos find for cucu bau bau\n"
-          (howto-cmd {:args "cucu bau bau"}))
+          (qht-cmd {:args "cucu bau bau"}))
       "empty search")
   )
 
-
-
-
-
-
-
 (cmd-hook #"howto"
           _ howto-cmd)
+
+(cmd-hook #"qht"
+          _ qht-cmd)

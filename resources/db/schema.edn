@@ -1,5 +1,12 @@
 [
  ;; howto
+ {:db/id #db/id[:db.part/db]
+  :db/ident :howto/bid
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext false
+  :db/doc "A howto's bussiness identification"
+  :db.install/_attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
   :db/ident :howto/title

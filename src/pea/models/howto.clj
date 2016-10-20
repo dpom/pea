@@ -17,7 +17,35 @@
     ))
 
 
-;; main function
+;; main functions
+
+(defn get-howto-by-bid
+  "Get howto from database using his bid.
+  @param bid - howto's bid
+  @return the howto map"
+  [bid]
+  (let [db (d/db (sys/get-db-conn))]
+    (ffirst (d/q '[:find (pull ?c [:howto/bid :howto/title :howto/text])
+                   :in $  ?bid
+                   :where
+                   [?c :howto/bid ?bid]]
+                 db
+                 bid))))
+
+
+(deftest get-howto-by-bid-test
+  (is (= {:howto/bid "admin101",
+          :howto/title "(Linux) Find The Bigest Dirs",
+          :howto/text
+          "On linux shell:\ndu -Sk | sort -nr | head -n10 "}
+         (get-howto-by-bid "admin101"))
+      "good bid")
+  (is (nil? (get-howto-by-bid "linux"))
+      "nok bid")
+  )
+
+
+
 (defn get-howto
   "Get howtos from database using maximum 3 words.
   @param w1 -  first word
@@ -37,7 +65,7 @@
                   [(fulltext $ :howto/text ?w2) [[?c ?t]]]
                   [(fulltext $ :howto/text ?w3) [[?c ?t]]]]
                  ]]
-     (flatten (d/q '[:find (pull ?c [:howto/title :howto/text])
+     (flatten (d/q '[:find (pull ?c [:howto/bid :howto/title :howto/text])
                      :in $ % ?w1 ?w2 ?w3
                      :where
                      [?c :howto/title ?title]
@@ -51,17 +79,17 @@
   (let [r1 (get-howto "linux" "bigest" "find")
         r2 (get-howto "clojure" "destructuring" "maps")
         r3 (get-howto "linux")
-        title (partial mapv :howto/title)]
-    (is (= [{:howto/title "(Linux) Find The Bigest Dirs",
+        bid (partial mapv :howto/bid)]
+    (is (= [{:howto/bid "admin101",
+             :howto/title "(Linux) Find The Bigest Dirs",
              :howto/text
              "On linux shell:\ndu -Sk | sort -nr | head -n10 "}]
            r1)
         "linux bigest find")
-    (is (= ["(Clojure) Associative Destructuring"]
-           (title r2))
+    (is (= ["clj102"]
+           (bid r2))
         "clojure destruct map")
-    (is (= ["(Linux) Find The Bigest Dirs"
-            "(Linux) Limit the cpu usage of a process."]
-           (title r3))
+    (is (= ["admin101" "admin102"]
+           (bid r3))
         "single word")
     ))
