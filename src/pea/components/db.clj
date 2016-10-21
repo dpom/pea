@@ -29,14 +29,17 @@
 
 (deftest set-schema!-test
   (let [s (set-schema! @testconn "test/schema0.edn")]
-    (is (= [:howto/title :howto/text]
+    (is (= [:howto/bid
+            :howto/title
+            :howto/text
+            :study/bid
+            :study/text
+            :study/res1next
+            :study/res1type
+            :study/res2next
+            :study/res2type]
            (mapv :db/ident s)))
-    ;; (is (= []
-    ;;        (mapv #(->> % first (d/entity @testdb) d/touch)
-    ;;             (d/q '[:find ?v
-    ;;                    :where [_ :db.install/attribute ?v]]
-    ;;                  @testdb))))
-    ))
+   ))
 
 (defn load-seed-data!
   "Load seed data (for demos) in database.
@@ -55,8 +58,9 @@
         entity (-> @testconn
                    d/db
                    (d/entity id))]
-    (is (= 4 (count res)) "count")
-    (is (= [:howto/title :howto/text] (keys entity)) "keys")
+    (is (= 5 (count res)) "count")
+    (is (= [:howto/bid :howto/title :howto/text]
+           (keys entity)) "keys")
     ))
 
 (defn test-ns-hook []

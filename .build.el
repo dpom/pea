@@ -10,12 +10,7 @@
 
 (setq project-version (ent-get-version))
 
-(setq ent-cli '(("templates/dev.cli" . "pea.sh")
-                ("templates/prod.cli" ."deploy/pea.sh")
-                ("templates/pead.cli" ."deploy/pead")
-                ("templates/dist.cli" . "deploy/dist.sh")
-                ("templates/update.cli" . "deploy/update.sh")
-                ))
+
 
 (setq pack-update '("deploy/pea.sh"
                     "deploy/update.sh"
@@ -60,7 +55,7 @@
 
 (task 'tree '() "tree dependencies" '(lambda (&optional x) "lein do clean, deps :tree"))
 
-(task 'tests '() "run tests" '(lambda (&optional x) "lein  with-profile +dan do clean, test"))
+(task 'tests '() "run tests" '(lambda (&optional x) "lein do clean, test"))
 
 (task 'libupdate () "update project libraries" '(lambda (&optional x) "lein ancient :no-colors"))
 

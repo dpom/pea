@@ -29,7 +29,7 @@
 
 (deftest new-config-test
   (is (= {:yetibot
-          {:db {:datomic-url "datomic:mem://pea"},
+          {:db {:datomic-url "datomic:mem://peatest"},
            :type :demo
            :adapters
            [{:name "freenode-irc",
@@ -49,7 +49,7 @@
   (get-in config [:yetibot :db :datomic-url]))
 
 (deftest get-db-uri-test
-  (is (= "datomic:mem://pea"
+  (is (= "datomic:mem://peatest"
          (get-db-uri (new-config (env/env :config-file))))))
 
 

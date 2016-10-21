@@ -60,7 +60,7 @@
 
 
 (defn qht-cmd
-  "howto? <wordkey1> [<wordkey2> [<wordkey3]] # search in howtos records that matches all the keys and display those howtos"
+  "qht <wordkey1> [<wordkey2> [<wordkey3]] # search in howtos records that matches all the keys and display those howtos"
   {:yb/cat #{:util}}
   [{:keys [args]}]
   (let [wkeys (s/split args #"\s" 3)
