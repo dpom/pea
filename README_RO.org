@@ -1,0 +1,132 @@
+#+TITLE: PEA
+#+DESCRIPTION: Personal Education Assistent
+#+STARTUP: overview
+
+* Descriere
+
+PEA (Personal Educational Assistant) este asa cum îi zice şi numele un tool de
+asistenţă atât pentru căutarea în biblioteca de "howto-uri", cât şi pentru
+aprofundarea studiului pe un anumit domeniu.
+
+
+* Instalare 
+
+Utilizarea unei imagini docker mi se pare cea mai rapidă metodă de instalare şi rulare a aplicaţiei. 
+
+** Docker
+
+Instrucţiunile de instalare pentru docker se găsesc pe site-ul lor:
+
+ https://docs.docker.com/engine/getstarted/step_one/#install-docker 
+
+** Fişierul de configuraţie
+
+Crează un fişier de configurare intr-un folder accesibil (în citire si scriere). De exmplu eu utilizez: =~/tmp/config/config.edn=.
+Acest fişier trebuie să conţină cel puţin următorii parametrii:
+#+BEGIN_SRC clojure
+{:yetibot
+ {:db {:datomic-url "datomic:mem://pea"}
+  :type :demo
+  :adapters
+  [{:name "freenode-irc",
+    :type :irc,
+    :host "chat.freenode.net",
+    :port "6665",
+    :username "pea_yetibot"
+    :rooms #{"#pea" "#yetibot"}}]
+  }
+}
+#+END_SRC
+
+** Încărcarea şi execuţia aplicaţiei
+
+De la un terminal ruleaza comanda:
+#+BEGIN_SRC sh
+docker run --name pea \
+  -d -p 3000:3000 \
+  -v ~/tmp/config:/usr/src/app/config \
+  dpom/pea:1.0.0
+#+END_SRC
+
+Pentru a vedea logurile aplicaţiei:
+#+BEGIN_SRC sh
+docker logs -f pea
+#+END_SRC
+ 
+**  Clientul IRC 
+
+Deschide un client IRC, conecteaza-te la  =irc.freenode.net= şi intră în camera =#pea=.
+
+* Utilizare
+
+Toate comenzile pea (ca si yetibot) incep cu semnul exclamării.
+
+** HowTo
+
+Primul grup de comenzi =qht= si =howto= folosesc pentru a accesa o bibliotecă de
+HOWTO-uri.
+
+Prin HOWTO înteleg un scurt text care explică un design pattern, un
+algoritm, sintaxa unei comenzi sau orice alt text util, care le folosesc
+destul de rar ca să nu ramână în memoria activă.
+
+În baza de date un howto are un identificator (de ex =clj101=), un titlu şi un text.
+
+=qht= - "querry how to" caută in baza de date un HOWTO cu ajutorul a maxim  3
+cuvinte cheie, care se regasesc in textul sau titlul HOWTO-ului. De
+examplu - vreau sa gasesc comanda din LINUX care imi listeaza primele 10
+subdirectoare in ordinea descrescatoare marimii lor. Comanda este:
+#+BEGIN_SRC sh
+!qht linux find biggest
+#+END_SRC
+
+=howto= caută în baza de date un item pe baza identificatorului lui. De exemplu:
+#+BEGIN_SRC sh
+!howto clj103
+#+END_SRC
+
+** Study
+
+Comenzile =study= şi =response= se folosesc pentru studiu individual asistat.
+
+În baza de date un item de studiu are un identificator (de exemplu =hist101=),
+un text, şi o întrebare cu două răspunsuri. Utilizatorul "navighează" prin
+item-urile de studiu în funcţie răspunsurile care le dă.
+
+Comanda =study= făra nici un paramentru afişează
+inceputul domeniului =history= in varianta demo. In varianta  de productie ar trebui să afişeze 
+ultimul item studiat de utilizator.
+
+Comanda =response= are doi parametrii, identificatorul itemului de studiu şi numărul răspunsului (1 sau 2).
+
+ 
+
+* Tehnologii utilizate
+
+Aplicaţia a fost proiectată special pentru acest proiect şi este dezvoltată in intregime în clojure.
+
+Este o aplicatie web standard structurata pe module:
+- system.clj si directorul components pentru implementarea conceptului de sistem
+- init.clj si handler.clj pentru web
+- directorul models pentru partea de bussiness models
+- directorul plugins pentru interfatarea cu engine-ul de chatbot
+
+
+Foloseşte bibliotecile:
+- stuartsierra/component pentru partea de system
+- clj-http si compojure pentru partea de web
+- datomic ca baza de date
+- yetibot.core pentru partea de chatbot
+
+Deoarece sunt un puternic susţinător al conceptelor TDD (test driven
+development) si documentare prin teste, toate testele sunt imbricate in
+fişierele sursa. 
+
+
+* Setup                                                              :noexport:
+#+AUTHOR:    Dan Pomohaci
+#+EMAIL:     dan.pomohaci@gmail.com
+#+LANGUAGE:  ro
+#+OPTIONS:   H:5 num:t toc:t \n:nil @:t ::t |:t ^:{} -:nil f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:nil pri:nil tags:not-in-toc
+#+EXPORT_EXCLUDE_TAGS: noexport

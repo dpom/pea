@@ -15,4 +15,8 @@ pom.xml.asc
 *.log
 tags
 config/config.edn
-/auto/README.el
+auto/
+tmp/
+*.bbl
+/*.pyg
+*.tex

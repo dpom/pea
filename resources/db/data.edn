@@ -1,0 +1,154 @@
+[
+
+;;; admin
+
+ {:db/id       #db/id[:db.part/user -101]
+  :howto/bid   "admin101"
+  :howto/title "(Linux) Find The Bigest Dirs"
+  :howto/text  "On linux shell:
+du -Sk | sort -nr | head -n10 "}
+ 
+ {:db/id       #db/id[:db.part/user -102]
+  :howto/bid   "admin102"
+  :howto/title "(Linux) Limit the cpu usage of a process."
+  :howto/text  "This will limit the average amount of CPU process with the <pid> consumes (on linux shell):
+ sudo cpulimit -p <pid> -l 50"}
+
+;;; clojure
+
+ {:db/id       #db/id[:db.part/user -103]
+  :howto/bid   "clj101"
+  :howto/title "Clojure Sequential Destructuring"
+  :howto/text  "This type of clojure destructuring can be used on any kind of data structure that can be traversed in linear time, including lists, vectors, and anything that can produce a sequence.
+A complete example:
+(def fruits [\"apple\" \"orange\" \"strawberry\" \"peach\" \"pear\" \"lemon\"])
+(let [[item1 _ item3 & remaining :as all-fruits] fruits]
+  (println \"The first and third fruits are\" item1 \"and\" item3)
+  (println \"These were taken from\" all-fruits)
+  (println \"The fruits after them are\" remaining))
+;= The first and third fruits are apple and strawberry
+;= These were taken from [apple orange strawberry peach pear lemon]
+;= The fruits after them are (peach pear lemon)
+"}
+   {:db/id       #db/id[:db.part/user -104]
+   :howto/bid   "clj102"
+   :howto/title "Clojure Associative Destructuring (1)"
+   :howto/text  "Clojure associative destructuring is applied to associative (key-value) structures (including maps, records, vectors, etc). The associative bindings are concerned with concisely extracting values of the map by key.
+A complete example:
+(def my-map {:a \"A\" :b \"B\" :c 3 :d 4})
+(let [{a :a, x :x, :or {x \"Not found!\"}, :as all} my-map]
+  (println \"I got\" a \"from\" all)
+  (println \"Where is x?\" x))
+;= I got A from {:a \"A\" :b \"B\" :c 3 :d 4}
+;= Where is x? Not found!
+For :keys usage see [clj103].
+For vectors see [clj101]."}
+
+
+  {:db/id       #db/id[:db.part/user -105]
+   :howto/bid   "clj103"
+   :howto/title "Clojure Associative Destructuring (2)"
+   :howto/text  "In [clj102] you might have noticed that the example still contains redundant information (the local binding name and the key name) in the associative destructuring form. The :keys key can be used to further remove the duplication:
+(let [{:keys [name location description]} client]
+  (println name location \"-\" description))
+;= Super Co. Philadelphia - The worldwide leader in plastic tableware.
+The :keys key is for associative values with keyword keys, but there are also :strs and :syms for string and symbol keys respectively. In all of these cases the vector contains symbols which are the local binding names.
+(def string-keys {\"first-name\" \"Joe\" \"last-name\" \"Smith\"})
+(let [{:strs [first-name last-name]} string-keys]
+  (println first-name last-name))
+;= Joe Smith
+(def symbol-keys {'first-name \"Jane\" 'last-name \"Doe\"})
+(let [{:syms [first-name last-name]} symbol-keys]
+  (println first-name last-name))
+;= Jane Doe"}
+
+;;; history
+
+ {:db/id          #db/id[:db.part/user -106]
+  :study/bid      "hist101"
+  :study/text     "Nevoia de aur, comerțul cu mirodenii și misionarismul creștin i-au împins atât pe portughezi, cât și pe spanioli să întreprindă expediții de explorare.
+Până la 1460, un rol însemnat în cercetarea coastei de vest a Africii a avut-o principele portughez Henric, zis “Navigatorul” (1394-1460). Principele portughez a reușit, ceea ce mulți la vremea aceea își doreau și anume - să îmbine caracterul aventurier al expedițiilor cu acțiunile de explorare economică.
+Denumirile acordate ținuturilor de pe coasta de vest a Africii: Coasta de Fildeș, Coasta de Aur, Coasta Sclavilor, reliefează natura comerțului practicat.
+Dupa ce în 1445 portughezii ating Capul Verde, în 1471 ei reușesc să treacă de Ecuator. Exploratorul portughez, Bartolomeo Diaz, este cel care reușește să atingă sudul Africii în 1488 și dă celui mai sudic punct numele de Capul Bunei Speranțe.
+Cu toate acestea, celebrul navigator Vasco da Gama, a realizat primul înconjur al Africii. Plecând pe data de 8 iulie 1497 din Portugalia, a străbătut Oceanul India, pentru a ajunge pe 20 mai 1453 in Calcutta. Astfel, Vasco da Gama a descoperit un nou drum spre India.
+
+Care dintre exploratorii de mai jos este cel care atinge pentru prima dată punctul cel mai sudic al Africii? 
+1. Henric “Navigatorul”
+2. Bartolomeo Diaz"
+  :study/res1next "hist102"
+  :study/res1type "false"
+  :study/res2next "hist103"
+  :study/res2type "true"
+}
+
+ {:db/id          #db/id[:db.part/user -107]
+  :study/bid      "hist102"
+  :study/text     "Principele portughez, Henric “Navigatorul” (1394 - 1460), cu toate că și-a dedicat o mare parte din viață cercetării coastei de vest a Africii, el nu a reușit să ajungă până în cel mai sudic punct al continentului.
+ Cu toate acestea, datorită conducerii sale administrative, principele Henric este considerat principalul inițiator a ceea ce istoricii numesc “Perioada marilor descoperirilor geografice”.
+ Cu ajutorul noului tip de navă, numită “caravelă”, proiectată de cercetătorii finanțați de el, Henric reușește să navigheze pentru prima dată în arhipelagurile Azore și Canare, ajungând chiar până în Guineea.
+ Cum dorești să continui? 
+1. Vreau să revin la textul anterior.
+2. Vreau să citesc depre “Perioada marilor descoperirilor geografice” "
+  :study/res1next "hist101"
+  :study/res1type "neutral"
+  :study/res2next "hist104"
+  :study/res2type "neutral"
+  }
+
+ {:db/id          #db/id[:db.part/user -108]
+  :study/bid      "hist103"
+  :study/text     "Bartolomeo Diaz (1450 - 1500), a fost un navigator și explorator portughez, fiind primul care a atins punctul cel mai sudic al Africii (1487 - 1488), dându-i astfel numele de Capul Bunei Speranțe.
+În secolul al XV-lea, pe timpul domniei principelui portughez, Henric “Navigatorul”, din dorința de a găsii unei căi maritime din spre Europa spre Asia, expedițiile navale portugheze declanșează, ceea ce istoricii numesc “Perioada marilor descoperirilor geografice”.
+ Astfel Bartolomeo Diaz primește din partea regelui portughez Ioan al II-lea o însărcinare secretă de a găsi punctul cel mai sudic al continentului african și pe cât posibil drumul spre India.
+Cum dorești să continui? 
+1. Vreau să citesc depre “Perioada marilor descoperirilor geografice”.
+2. Vreau să citesc despre “Cautarea unui nou drum spre India și descoperirea Americii de către Cristofor Columb”."
+  :study/res1next "hist104"
+  :study/res1type "neutral"
+  :study/res2next "hist999"
+  :study/res2type "neutral"
+  }
+
+ {:db/id          #db/id[:db.part/user -109]
+  :study/bid      "hist104"
+  :study/text     "“Perioada marilor descoperiri geografice” din secolele XV-XVI a constituit un moment de referință atât pentru istoria Europei, cât și a întregii lumi.
+Determinate de cauze politice, economice, religioase, științifice și tehnice, descoperirile geografice au avut rolul unei adevarate “revoluții” în istoria mondială. La jumătatea secolului al XV-lea, orizontul geografic al europenilor era limitat. În afară de Europa, ei cunoșteau Orientul Apropiat, nordul Africii și aveau unele cunoștințe vagi despre restul Asiei și al Africii.
+Spre vest, în direcția Irlandei și Groenlandei, navigau numai popoarele scandinave. Deși, încă din secolul al X-lea, navigatorii scandinavi au atins țărmurile vestice ale Americii de Nord, acest continent a rămas necunoscut celorlați europeni până la sfârșitul secolului al XV-lea.
+Spre deosebire de europeni, arabii, locuind pe trei continente, cunoșteau mai bine Africa tropicală și Asia. Ei traversau adesea Oceanul Indian, între Africa Orientală și regiunile de sud și sud-estice ale Asiei.
+ Primii navigatori europeni care au ajuns în America de Nord faceau parte din popoarele scandinave?  
+1. Fals.
+2. Adevărat."
+  :study/res1next "hist105"
+  :study/res1type "false"
+  :study/res2next "hist105"
+  :study/res2type "true"
+  }
+
+
+ {:db/id          #db/id[:db.part/user -110]
+  :study/bid      "hist105"
+  :study/text     "Încă din secolul al X-lea, populațiile din regiunea scandinavă a Europei, cunoscute sub denumirile de “norsemen” sau “vikingi” au reușit să exploreze și chiar să colonizeze zonele nord-estice ale continentului nord American. Colonia de Norse din Goenlanda a durat aproape 500 de ani. Cu toate acestea, din cauza faptului că erau colonii permanente, numărul vestigilor arheologice sunt foarte puține.
+ În 1492, dorind să găsescă un nou drum maritim mai scurt spre India, exploratorul de origini italiene, Cristofor Columb navigează spre vest, descoperind astfel insulele Antile.
+Cum dorești să continui? 
+1. Să revin la textul anterior.
+2. Să citesc despre “Cautarea unui nou drum spre India și descoperirea Americii de către Cristofor Columb”."
+  :study/res1next "hist104"
+  :study/res1type "neutral"
+  :study/res2next "hist999"
+  :study/res2type "neutral"
+  }
+
+
+
+ {:db/id          #db/id[:db.part/user -199]
+  :study/bid      "hist999"
+  :study/text     "Imi pare rău. Această versiune demo nu conţine alte item-uri."
+  :study/res1next "hist999"
+  :study/res1type "neutral"
+  :study/res2next "hist999"
+  :study/res2type "neutral"
+  }
+
+
+
+ ]

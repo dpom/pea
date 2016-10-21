@@ -3,10 +3,70 @@
 #+STARTUP: overview
 
 * Description
+
+PEA (Personal Educational Assistant) it is an assistance tool for both searching a library
+"HOWTOs" and to deepen the study on a particular area.
+
 * Installation 
+
+Using a docker image  is the fastest way to get up and running the PEA application.
+
 ** Docker
 
-First install docker on your computer using: https://docs.docker.com/engine/getstarted/step_one/#install-docker 
+If you don't have already installed you could install docker using the instructions from their site: 
+
+ https://docs.docker.com/engine/getstarted/step_one/#install-docker 
+
+** Configuration File
+
+Create a configuration file in an accesible read-write folder. For example, I use: =~/tmp/config/config.edn=.
+A minimal content of this file is:
+#+BEGIN_SRC clojure
+{:yetibot
+ {:db {:datomic-url "datomic:mem://pea"}
+  :type :demo
+  :adapters
+  [{:name "freenode-irc",
+    :type :irc,
+    :host "chat.freenode.net",
+    :port "6665",
+    :username "pea_yetibot"
+    :rooms #{"#pea" "#yetibot"}}]
+  }
+}
+#+END_SRC
+
+** Load and Run the Application
+
+From a console terminal run the command:
+#+BEGIN_SRC sh
+docker run --name pea \
+  -d -p 3000:3000 \
+  -v ~/tmp/config:/usr/src/app/config \
+  dpom/pea:1.0.0
+#+END_SRC
+
+If you want to see the application logs type:
+#+BEGIN_SRC sh
+docker logs -f pea
+#+END_SRC
+ 
+** IRC Client 
+
+Open an IRC client, connect to =irc.freenode.net= and join the =#pea= room.
+
+* Usage
+
+All pea (and yetibot) commands start with an exclamation mark. 
+
+** HowTo
+
+The first group of commands  =qht= and  =howto= use to access a
+HOWTOs library.
+
+By HOWTO I understand a short text explaining a design pattern, an
+algorithm, a command syntax or any other useful text, I use
+rarely as not to remain in active memory.
 
 
 * Used Technologies

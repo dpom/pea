@@ -1,0 +1,76 @@
+[
+ ;; howto
+ {:db/id #db/id[:db.part/db]
+  :db/ident :howto/bid
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext false
+  :db/doc "A howto's bussiness identification"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :howto/title
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A howto's title"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :howto/text
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A howto's text"
+  :db.install/_attribute :db.part/db}
+
+ ;; study
+ {:db/id #db/id[:db.part/db]
+  :db/ident :study/bid
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext false
+  :db/doc "A study's bussiness identification"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :study/text
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A study's text"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :study/res1next
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext false
+  :db/doc "A study's next item for response 1"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :study/res1type
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext false
+  :db/doc "A study's response 1 type (false, true, or neutral)"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :study/res2next
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext false
+  :db/doc "A study's next item for response 2"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :study/res2type
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext false
+  :db/doc "A study's response 2 type (false, true, or neutral)"
+  :db.install/_attribute :db.part/db}
+
+ ]
