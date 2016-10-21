@@ -4,10 +4,41 @@
 
 * Description
 * Installation 
+
+Using a docker image  is the fastest way to get up and running the PEA application.
+
 ** Docker
+If you don't have already installed you could install docker using the instructions from their site: 
 
-First install docker on your computer using: https://docs.docker.com/engine/getstarted/step_one/#install-docker 
+ https://docs.docker.com/engine/getstarted/step_one/#install-docker 
+** Configuration File
 
+Create a configuration file in an accesible read-write folder. For example, I use: =~/tmp/config/config.edn=.
+A minimal content of this file is:
+#+BEGIN_SRC clojure
+{:yetibot
+ {:db {:datomic-url "datomic:mem://pea"}
+  :type :demo
+  :adapters
+  [{:name "freenode-irc",
+    :type :irc,
+    :host "chat.freenode.net",
+    :port "6665",
+    :username "pea_yetibot"
+    :rooms #{"#pea" "#yetibot"}}]
+  }
+}
+#+END_SRC
+
+** Load and Run the Application
+
+From a console terminal run the command:
+#+BEGIN_SRC sh
+docker run --name pea \
+  -d -p 3000:3000 \
+  -v ~/tmp/config:/usr/src/app/config \
+  dpom/pea
+#+END_SRC
 
 * Used Technologies
 

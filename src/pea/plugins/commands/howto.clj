@@ -61,7 +61,7 @@
 
 (defn qht-cmd
   "qht <wordkey1> [<wordkey2> [<wordkey3]] # search in howtos records that matches all the keys and display those howtos"
-  {:yb/cat #{:util}}
+ {:yb/cat #{:util}}
   [{:keys [args]}]
   (let [wkeys (s/split args #"\s" 3)
         res (apply ht/get-howto wkeys)]

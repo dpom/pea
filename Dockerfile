@@ -8,6 +8,8 @@ RUN mkdir -p /usr/src/app
 
 COPY ./src /usr/src/app/src/
 
+COPY ./resources /usr/src/app/resources/
+
 COPY ./test /usr/src/app/test/
 
 COPY ./project.clj /usr/src/app/project.clj
@@ -18,4 +20,4 @@ RUN lein deps
 
 VOLUME /usr/src/app/config/
 
-CMD ["lein", "run"]
+CMD ["lein", "with-profile", "production", "run"]

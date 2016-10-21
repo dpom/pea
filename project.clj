@@ -1,4 +1,4 @@
-(defproject pea "0.2-dev-01"
+(defproject pea "1.0.0-rc2"
   :description "A Personal Education Assistant inside your chat."
 
   :license {:name "Eclipse Public License"
@@ -37,6 +37,7 @@
             [lein-cloverage "1.0.7-SNAPSHOT" :exclusions [org.clojure/clojure]]
             [lein-ring "0.9.5"]
             [lein-environ "1.1.0"]
+            [lein-zip "0.1.1"]
             [io.sarnowski/lein-docker "1.1.0"]]
 
   :aliases {"version" ["exec" "-ep" "(use 'pea.version)(print version)"]}
@@ -73,6 +74,10 @@
 
   :docker {:image-name "dpom/pea"}
 
+  :zip ["project.clj" "resources" "src" "test" "README.org"
+        ".build.el" "Dockerfile" ".dockerignore"
+        ".gitignore" "LICENSE" "log4j.properties"]
+  
   :ring {:handler pea.handler/app
          :init    pea.handler/init
          :destroy pea.handler/destroy

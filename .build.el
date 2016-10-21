@@ -11,38 +11,6 @@
 (setq project-version (ent-get-version))
 
 
-
-(setq pack-update '("deploy/pea.sh"
-                    "deploy/update.sh"
-                    "deploy/pead"))
-
-(setq pack-dist '("deploy/pea.sh"
-                  "deploy/start_pea.sh"
-                  "deploy/stop_pea.sh"
-                  "deploy/status_pea.sh"
-                  "deploy/dist.sh"
-                  "deploy/pead"))
-
-(defun add-file-to-zip (zip filename)
-  (progn
-    (message "add %s to %s" filename zipfile)
-    (call-process "zip" nil t t "-j" zipfile filename)))
-
-(defun get-package-name ()
-  (concat "target/" ent-project-name "-" project-version "-standalone.jar"))
-
-(defun make-pack (zipfile pack)
-  (let ((zip (expand-file-name zipfile ent-project-home)))
-    (if (file-exists-p zipfile) (delete-file zip))
-    (mapc (function (lambda (x) (add-file-to-zip zip x))) pack)
-    (add-file-to-zip zip (get-package-name))
-    (call-process "shasum" nil t t zipfile)))
-
-(defun make-update-pack () (make-pack "pea_update.zip" pack-update))
-
-(defun make-dist-pack () (make-pack "pea.zip" pack-dist))
-
-
 ;; tasks
 
 (load ent-init-file)
@@ -57,22 +25,13 @@
 
 (task 'tests '() "run tests" '(lambda (&optional x) "lein do clean, test"))
 
+(task 'docker '() "build and upload docker image" '(lambda (&optional x) "lein do docker build, docker push"))
+
 (task 'libupdate () "update project libraries" '(lambda (&optional x) "lein ancient :no-colors"))
 
 (task 'package '() "package the library" '(lambda (&optional x) "lein do clean, uberjar"))
 
-(task 'gencli '() "generate script files" '(lambda (&optional x) (ent-emacs "ent-make-all-cli-files"
-                                                                            (expand-file-name ent-file-name ent-project-home))))
-
-(task 'deploy '(gencli package) "deploy the application" '(lambda (&optional x) "chmod a+x deploy/qserv*;ls -l deploy"))
-
-(task 'distupdate '(deploy) "make update distribution" '(lambda (&optional x) (ent-emacs "make-update-pack" 
-                                                                                         (expand-file-name ent-file-name ent-project-home))))
-
-(task 'dist '(deploy) "make distribution" '(lambda (&optional x) (ent-emacs "make-dist-pack" 
-                                                                            (expand-file-name ent-file-name ent-project-home))))
-
-
+(task 'zip '() "package the sources" '(lambda (&optional x) "lein zip"))
 
 ;; Local Variables:
 ;; no-byte-compile: t
