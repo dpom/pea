@@ -1,4 +1,4 @@
-(defproject pea "1.0.0-rc2"
+(defproject pea "1.0.0"
   :description "A Personal Education Assistant inside your chat."
 
   :license {:name "Eclipse Public License"
