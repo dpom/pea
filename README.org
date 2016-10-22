@@ -68,8 +68,25 @@ By HOWTO I understand a short text explaining a design pattern, an
 algorithm, a command syntax or any other useful text, I use
 rarely as not to remain in active memory.
 
+In the database a howto item have an identifier (ex =clj101=), a title, and a text.
 
-* Used Technologies
+=qht= (querry howto) search  in the database all the howto items  which contains all the given keywords. Up to 3 words could be use.
+For example if you want to find the linux command to list the first 10 sub-directories size ordered a possible command could be:
+#+BEGIN_SRC sh
+!qht linux find biggest
+#+END_SRC
+
+=howto= search an howto item using his identifier. For example:
+#+BEGIN_SRC sh
+!howto clj103
+#+END_SRC
+
+** Study
+
+The =study= and =response= commands are used for assisted individual study.
+
+In the database a study item have an identifier (ex =hist101=), a text, and a question with 2 answers.
+User "navigate" through study items depending on the answers he gave.
 
 
 
